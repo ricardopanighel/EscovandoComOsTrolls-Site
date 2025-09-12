@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mundo da Escovação dos Trolls</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chewy&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-chewy {
+        font-family: "Chewy", cursive;
+      }
+      .progress-ring {
+        transition: stroke-dashoffset 0.5s linear;
+      }
+      .troll-dance {
+        animation: dance 2s infinite alternate;
+      }
+      .bounce {
+        animation: bounce 1s infinite alternate;
+      }
+      @keyframes dance {
+        0%,
+        100% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
+      }
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        opacity: 0;
+      }
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Estilos para o player de vídeo */
+      .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* Proporção 16:9 */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Melhorias de responsividade */
+      @media (max-width: 768px) {
+        .mobile-flex-col {
+          flex-direction: column;
+        }
+        .mobile-text-center {
+          text-align: center;
+        }
+        .mobile-p-4 {
+          padding: 1rem;
+        }
+        .mobile-mb-4 {
+          margin-bottom: 1rem;
+        }
+        .mobile-w-full {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-b from-pink-50 to-blue-50 p-2 sm:p-4"
+  >
+    <div class="max-w-6xl mx-auto w-full">
+      <!-- Banner Header -->
+      <header
+        class="relative text-center mb-4 sm:mb-8 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-pink-400 to-blue-400 opacity-90 z-0"
+        ></div>
+        <img
+          src="https://escovandocomtrolls.my.canva.site/barra-de-progresso/_assets/media/3f86e5bcb59f7d6fb7d23e9923a06894.png"
+          alt="Banner colorido dos Trolls com personagens felizes e cantando"
+          class="w-full h-auto object-cover opacity-70 z-10"
+        />
+        <div
+          class="absolute inset-0 flex flex-col items-center justify-center z-20 p-2"
+        >
+          <h1
+            class="font-chewy text-2xl sm:text-4xl md:text-5xl text-white mb-1 sm:mb-2 drop-shadow-md"
+          >
+            Mundo da Escovação dos Trolls
+          </h1>
+          <p
+            class="text-white text-sm sm:text-lg md:text-xl font-medium drop-shadow-md"
+          >
+            Aprenda a escovar os dentes de forma divertida!
+          </p>
+        </div>
+      </header>
+
+      <!-- Navigation -->
+      <nav
+        class="flex justify-center mb-4 sm:mb-8 bg-white rounded-full p-1 shadow-md"
+      >
+        <button
+          id="educationTab"
+          class="px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-all bg-pink-300 text-white text-sm sm:text-base"
+        >
+          Aprender
+        </button>
+        <button
+          id="timerTab"
+          class="px-4 sm:px-6 py-1 sm:py-2 rounded-full transition-all text-pink-400 text-sm sm:text-base"
+        >
+          Escovar com Vídeo
+        </button>
+      </nav>
+
+      <!-- Content -->
+      <main
+        class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg overflow-hidden"
+      >
+        <!-- Education Content -->
+        <div id="educationContent">
+          <h2
+            class="text-xl sm:text-2xl font-semibold text-pink-400 mb-4 sm:mb-6 text-center"
+          >
+            Por que escovar os dentes é importante?
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div class="bg-pink-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
+              <h3
+                class="font-semibold text-pink-500 mb-1 sm:mb-2 text-sm sm:text-base"
+              >
+                🦷 Previne cáries
+              </h3>
+              <p class="text-gray-700 text-xs sm:text-sm">
+                A escovação remove a placa bacteriana que causa cáries nos
+                dentes.
+              </p>
+            </div>
+
+            <div class="bg-blue-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
+              <h3
+                class="font-semibold text-blue-500 mb-1 sm:mb-2 text-sm sm:text-base"
+              >
+                😁 Sorriso saudável
+              </h3>
+              <p class="text-gray-700 text-xs sm:text-sm">
+                Dentes limpos significam um sorriso mais bonito e saudável.
+              </p>
+            </div>
+
+            <div class="bg-pink-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
+              <h3
+                class="font-semibold text-pink-500 mb-1 sm:mb-2 text-sm sm:text-base"
+              >
+                👅 Evita mau hálito
+              </h3>
+              <p class="text-gray-700 text-xs sm:text-sm">
+                Escovar a língua e os dentes ajuda a manter o hálito fresco.
+              </p>
+            </div>
+
+            <div class="bg-blue-50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
+              <h3
+                class="font-semibold text-blue-500 mb-1 sm:mb-2 text-sm sm:text-base"
+              >
+                ⏰ Duração ideal
+              </h3>
+              <p class="text-gray-700 text-xs sm:text-sm">
+                Os dentistas recomendam escovar por 2 minutos, 3 vezes ao dia.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bg-gradient-to-r from-pink-100 to-blue-100 p-4 sm:p-6 rounded-lg sm:rounded-xl"
+          >
+            <h3
+              class="text-lg sm:text-xl font-semibold text-pink-500 mb-2 sm:mb-4"
+            >
+              Como escovar corretamente:
+            </h3>
+            <ol
+              class="list-decimal list-inside space-y-1 sm:space-y-2 text-gray-700 text-xs sm:text-sm"
+            >
+              <li>Use uma quantidade pequena de pasta de dentes</li>
+              <li>Escove suavemente em movimentos circulares</li>
+              <li>Não se esqueça de escovar a parte interna dos dentes</li>
+              <li>Escove a língua para remover bactérias</li>
+              <li>Use fio dental pelo menos uma vez ao dia</li>
+            </ol>
+          </div>
+
+          <!-- Logos Section -->
+          <div class="mt-8 p-4 bg-white rounded-xl border border-pink-200">
+            <h3 class="text-lg font-semibold text-pink-500 mb-4 text-center">
+              Em colaboração:
+            </h3>
+            <div
+              class="flex flex-col sm:flex-row justify-center items-center gap-6"
+            >
+              <img
+                src="imgs/logo-gum.png"
+                alt="Logo da GUM"
+                class="max-w-[160px] md:max-w-[300px] md:h-32 h-22 object-contain"
+              />
+              <img
+                src="imgs/logo-unisanta.png"
+                alt="Logo da Unisanta"
+                class="max-w-[160px] md:max-w-[300px] md:h-32 h-22 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Timer Content with Video -->
+        <div id="timerContent" class="hidden">
+          <h2
+            class="text-xl sm:text-2xl font-semibold text-pink-400 mb-4 sm:mb-6 text-center"
+          >
+            Escove os Dentes com os Trolls!
+          </h2>
+
+          <div class="grid lg:grid-cols-2 gap-6 mb-6">
+            <!-- Video Section -->
+            <div
+              class="bg-gradient-to-br from-pink-100 to-blue-100 p-4 sm:p-6 rounded-xl"
+            >
+              <h3
+                class="text-lg sm:text-xl font-semibold text-pink-500 mb-3 text-center"
+              >
+                Assista e Escove Junto!
+              </h3>
+              <div class="video-container mb-4">
+                <!-- Substitua pelo vídeo real dos Trolls sobre escovação -->
+                <video width="560" height="315" autoplay loop controls>
+                  <source src="imgs/video-trolls.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div class="text-center">
+                <p
+                  class="text-pink-600 font-semibold mb-2 text-sm sm:text-base"
+                >
+                  Acompanhe a música dos Trolls enquanto escova!
+                </p>
+                <p class="text-gray-700 text-xs sm:text-sm">
+                  Faça como a Poppy e o Tronco!
+                </p>
+              </div>
+            </div>
+
+            <!-- Timer Section -->
+            <div class="bg-blue-50 p-4 sm:p-6 rounded-xl">
+              <h3
+                class="text-lg sm:text-xl font-semibold text-blue-500 mb-3 text-center"
+              >
+                Timer de Escovação
+              </h3>
+
+              <p
+                class="text-blue-600 mb-3 sm:mb-4 text-sm sm:text-base text-center"
+              >
+                Escove junto com o vídeo! Ganhe pontos a cada 30 segundos.
+              </p>
+
+              <div
+                class="flex flex-col sm:flex-row items-center justify-center mb-3 sm:mb-4 space-y-2 sm:space-y-0"
+              >
+                <div
+                  class="text-lg sm:text-2xl font-bold text-pink-500 sm:mr-4"
+                >
+                  Pontuação: <span id="score">0</span>
+                </div>
+                <div
+                  class="bg-pink-200 text-pink-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold"
+                >
+                  +10 pts a cada 30s
+                </div>
+              </div>
+
+              <div
+                class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto mb-4 sm:mb-6"
+              >
+                <div
+                  class="absolute inset-0 flex flex-col items-center justify-center"
+                >
+                  <div
+                    class="text-3xl sm:text-4xl font-bold text-pink-500 mb-1 sm:mb-2"
+                    id="timeDisplay"
+                  >
+                    2:00
+                  </div>
+                  <div
+                    class="text-xs sm:text-sm text-gray-600"
+                    id="timerStatus"
+                  >
+                    Pronto para começar!
+                  </div>
+                </div>
+
+                <svg class="w-full h-full transform -rotate-90">
+                  <circle
+                    cx="96"
+                    cy="96"
+                    r="88"
+                    stroke="#e2e8f0"
+                    strokeWidth="6"
+                    fill="transparent"
+                    class="sm:hidden"
+                  />
+                  <circle
+                    cx="128"
+                    cy="128"
+                    r="116"
+                    stroke="#e2e8f0"
+                    strokeWidth="8"
+                    fill="transparent"
+                    class="hidden sm:block"
+                  />
+
+                  <circle
+                    id="progressCircleMobile"
+                    cx="96"
+                    cy="96"
+                    r="88"
+                    stroke="#f472b6"
+                    strokeWidth="6"
+                    fill="transparent"
+                    strokeDasharray="552"
+                    strokeDashoffset="0"
+                    strokeLinecap="round"
+                    class="sm:hidden"
+                  />
+                  <circle
+                    id="progressCircle"
+                    cx="128"
+                    cy="128"
+                    r="116"
+                    stroke="#f472b6"
+                    strokeWidth="8"
+                    fill="transparent"
+                    strokeDasharray="728"
+                    strokeDashoffset="0"
+                    strokeLinecap="round"
+                    class="hidden sm:block"
+                  />
+                </svg>
+              </div>
+
+              <div
+                class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4 sm:mb-6"
+              >
+                <button
+                  id="startBtn"
+                  class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-colors text-sm sm:text-base mobile-w-full sm:w-auto"
+                >
+                  Começar
+                </button>
+
+                <button
+                  id="pauseBtn"
+                  class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-colors opacity-50 text-sm sm:text-base mobile-w-full sm:w-auto"
+                  disabled
+                >
+                  Pausar
+                </button>
+
+                <button
+                  id="resetBtn"
+                  class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-colors text-sm sm:text-base mobile-w-full sm:w-auto"
+                >
+                  Reiniciar
+                </button>
+              </div>
+
+              <div class="bg-pink-100 p-2 sm:p-3 rounded-lg">
+                <div class="flex items-center justify-center">
+                  <div
+                    class="w-4 h-4 sm:w-6 sm:h-6 bg-green-400 rounded-full mr-2"
+                  ></div>
+                  <span
+                    class="text-xs sm:text-sm text-green-700"
+                    id="nextReward"
+                    >Próxima recompensa em: 30 segundos</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="completionMessage"
+            class="hidden bg-green-100 p-4 sm:p-6 rounded-lg sm:rounded-xl"
+          >
+            <h3
+              class="text-xl sm:text-2xl font-bold text-green-600 mb-1 sm:mb-2"
+            >
+              Escovação Completa!
+            </h3>
+            <p class="text-green-700 mb-3 sm:mb-4 text-sm sm:text-base">
+              Você escovou os dentes por 2 minutos completos e ganhou
+              <span id="totalPoints">40</span> pontos!
+            </p>
+
+            <div
+              class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-3 sm:mb-4"
+            >
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c988aa49-0d59-48ed-a9ec-a21c713c306b.png"
+                alt="Troll feliz com dentes brilhantes e sorriso radiante"
+                class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow-md troll-dance"
+              />
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a091beea-b4fd-4210-a76e-c710e4d942bf.png"
+                alt="Escova de dentes colorida com pasta azul e rosa"
+                class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow-md bounce"
+              />
+            </div>
+
+            <button
+              id="restartBtn"
+              class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm sm:text-base"
+            >
+              Escovar Novamente
+            </button>
+          </div>
+
+          <div class="mt-6 bg-pink-50 p-4 rounded-xl">
+            <h3 class="font-semibold text-pink-500 mb-2">Dica de Escovação</h3>
+            <p class="text-gray-700 text-sm" id="brushingTip">
+              Escove os dentes em movimentos circulares suaves!
+            </p>
+          </div>
+
+          <!-- Logos Section -->
+          <div class="mt-6 p-4 bg-white rounded-xl border border-pink-200">
+            <h3 class="text-lg font-semibold text-pink-500 mb-4 text-center">
+              Em colaboração:
+            </h3>
+            <div
+              class="flex flex-col sm:flex-row justify-center items-center gap-6"
+            >
+              <img
+                src="imgs/logo-gum.png"
+                alt="Logo da GUM"
+                class="max-w-[160px] md:max-w-[300px] md:h-32 h-22 object-contain"
+              />
+              <img
+                src="imgs/logo-unisanta.png"
+                alt="Logo da Unisanta"
+                class="max-w-[160px] md:max-w-[300px] md:h-32 h-22 object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="text-center mt-6 text-gray-600 text-sm">
+        <p>
+          © 2025 - 4° semestre de Odontologia - Saúde Bucal Coletiva. Todos os
+          direitos reservados.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Elementos da DOM
+      const educationTab = document.getElementById("educationTab");
+      const timerTab = document.getElementById("timerTab");
+      const educationContent = document.getElementById("educationContent");
+      const timerContent = document.getElementById("timerContent");
+
+      const startBtn = document.getElementById("startBtn");
+      const pauseBtn = document.getElementById("pauseBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const restartBtn = document.getElementById("restartBtn");
+      const timeDisplay = document.getElementById("timeDisplay");
+      const timerStatus = document.getElementById("timerStatus");
+      const progressCircle = document.getElementById("progressCircle");
+      const progressCircleMobile = document.getElementById(
+        "progressCircleMobile"
+      );
+      const scoreDisplay = document.getElementById("score");
+      const nextReward = document.getElementById("nextReward");
+      const completionMessage = document.getElementById("completionMessage");
+      const totalPoints = document.getElementById("totalPoints");
+      const brushingTip = document.getElementById("brushingTip");
+
+      // Variáveis do timer
+      let totalTime = 120; // 2 minutos em segundos
+      let timeLeft = totalTime;
+      let timerInterval;
+      let isRunning = false;
+      let score = 0;
+      let nextRewardTime = 30;
+      let rewardInterval = 30; // Recompensa a cada 30 segundos
+
+      // Dicas de escovação
+      const tips = [
+        "Escove os dentes em movimentos circulares suaves!",
+        "Agora escove os dentes de trás!",
+        "Não se esqueça da parte interna dos dentes!",
+        "Finalize escovando a língua!",
+        "Faça movimentos de vai e vem!",
+        "Escove por pelo menos 2 minutos!",
+        "Não esqueça de usar fio dental!",
+      ];
+
+      // Alternar entre as abas
+      function setActiveTab(tabName) {
+        // Esconder todos os conteúdos
+        educationContent.classList.add("hidden");
+        timerContent.classList.add("hidden");
+
+        // Remover estilos ativos de todas as abas
+        educationTab.classList.remove("bg-pink-300", "text-white");
+        educationTab.classList.add("text-pink-400");
+        timerTab.classList.remove("bg-pink-300", "text-white");
+        timerTab.classList.add("text-pink-400");
+
+        // Mostrar conteúdo e estilizar aba ativa
+        if (tabName === "education") {
+          educationContent.classList.remove("hidden");
+          educationTab.classList.add("bg-pink-300", "text-white");
+          educationTab.classList.remove("text-pink-400");
+        } else if (tabName === "timer") {
+          timerContent.classList.remove("hidden");
+          timerTab.classList.add("bg-pink-300", "text-white");
+          timerTab.classList.remove("text-pink-400");
+        }
+      }
+
+      educationTab.addEventListener("click", () => setActiveTab("education"));
+      timerTab.addEventListener("click", () => setActiveTab("timer"));
+
+      // Atualizar display do tempo
+      function updateTimeDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timeDisplay.textContent = `${minutes}:${
+          seconds < 10 ? "0" : ""
+        }${seconds}`;
+
+        // Atualizar a barra de progresso circular
+        const circumference = 728; // 2 * π * r (r = 116)
+        const circumferenceMobile = 552; // 2 * π * r (r = 88)
+        const offset = circumference - (timeLeft / totalTime) * circumference;
+        const offsetMobile =
+          circumferenceMobile - (timeLeft / totalTime) * circumferenceMobile;
+
+        if (progressCircle) progressCircle.style.strokeDashoffset = offset;
+        if (progressCircleMobile)
+          progressCircleMobile.style.strokeDashoffset = offsetMobile;
+
+        // Verificar se é hora de dar uma recompensa
+        const timeUntilNextReward = nextRewardTime - (totalTime - timeLeft);
+        if (timeUntilNextReward <= 0) {
+          addScore();
+          nextRewardTime += rewardInterval;
+        }
+
+        // Atualizar mensagem de próxima recompensa
+        if (timeUntilNextReward > 0) {
+          nextReward.textContent = `Próxima recompensa em: ${timeUntilNextReward} segundos`;
+        }
+
+        // Atualizar dica com base no progresso
+        updateBrushingTip();
+      }
+
+      // Adicionar pontuação
+      function addScore() {
+        score += 10;
+        scoreDisplay.textContent = score;
+
+        // Criar efeito de confete
+        createConfetti();
+
+        // Feedback visual
+        scoreDisplay.classList.add("scale-125");
+        setTimeout(() => {
+          scoreDisplay.classList.remove("scale-125");
+        }, 300);
+      }
+
+      // Atualizar dica de escovação
+      function updateBrushingTip() {
+        const progress = 1 - timeLeft / totalTime;
+        const tipIndex = Math.min(
+          Math.floor(progress * tips.length),
+          tips.length - 1
+        );
+        brushingTip.textContent = tips[tipIndex];
+      }
+
+      // Criar efeito de confete
+      function createConfetti() {
+        for (let i = 0; i < 30; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.backgroundColor = [
+            "#f472b6",
+            "#93c5fd",
+            "#fbbf24",
+            "#a7f3d0",
+          ][Math.floor(Math.random() * 4)];
+          confetti.style.left = Math.random() * 100 + "%";
+          confetti.style.animation = `confetti-fall ${
+            1 + Math.random() * 2
+          }s linear forwards`;
+          confetti.style.animationDelay = Math.random() * 0.5 + "s";
+          document.getElementById("timerContent").appendChild(confetti);
+
+          // Remover após a animação
+          setTimeout(() => {
+            confetti.remove();
+          }, 3000);
+        }
+      }
+
+      // Iniciar o timer
+      function startTimer() {
+        if (timeLeft <= 0) return;
+
+        isRunning = true;
+        timerStatus.textContent = "Escovando...";
+        startBtn.disabled = true;
+        startBtn.classList.add("opacity-50");
+        pauseBtn.disabled = false;
+        pauseBtn.classList.remove("opacity-50");
+
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          updateTimeDisplay();
+
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timerStatus.textContent = "Escovação completa!";
+            totalPoints.textContent = score;
+            completionMessage.classList.remove("hidden");
+
+            // Celebrar com mais confetes
+            for (let i = 0; i < 50; i++) {
+              setTimeout(() => createConfetti(), i * 50);
+            }
+          }
+        }, 1000);
+      }
+
+      // Pausar o timer
+      function pauseTimer() {
+        if (!isRunning) return;
+
+        clearInterval(timerInterval);
+        isRunning = false;
+        timerStatus.textContent = "Pausado";
+        startBtn.disabled = false;
+        startBtn.classList.remove("opacity-50");
+        pauseBtn.disabled = true;
+        pauseBtn.classList.add("opacity-50");
+      }
+
+      // Reiniciar o timer
+      function resetTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        timeLeft = totalTime;
+        score = 0;
+        nextRewardTime = rewardInterval;
+        updateTimeDisplay();
+        scoreDisplay.textContent = "0";
+        timerStatus.textContent = "Pronto para começar!";
+        startBtn.disabled = false;
+        startBtn.classList.remove("opacity-50");
+        pauseBtn.disabled = true;
+        pauseBtn.classList.add("opacity-50");
+        completionMessage.classList.add("hidden");
+        updateBrushingTip();
+      }
+
+      // Event listeners para os botões
+      startBtn.addEventListener("click", startTimer);
+      pauseBtn.addEventListener("click", pauseTimer);
+      resetBtn.addEventListener("click", resetTimer);
+      restartBtn.addEventListener("click", resetTimer);
+
+      // Inicializar
+      updateTimeDisplay();
+    </script>
+  </body>
+</html>
